@@ -1,0 +1,70 @@
+#include <Servo.h>
+
+
+// Servo Declarations
+Servo myServo_topright_wrist;
+Servo myServo_topright_shoulder;
+Servo myServo_topleft_wrist;
+Servo myServo_topleft_shoulder;
+Servo myServo_bottomright_wrist;
+Servo myServo_bottomright_shoulder;
+Servo myServo_bottomleft_wrist;
+Servo myServo_bottomleft_shoulder;
+
+//Receiver Pin Declaration
+const int receiverPin = 2; 
+
+//Servo pin assignments
+const int myServo_topright_wrist_pin = 12;
+const int myServo_topright_shoulder_pin = 11;
+const int myServo_topleft_wrist_pin = 10;
+const int myServo_topleft_shoulder_pin = 9;
+const int myServo_bottomright_wrist_pin = 8;
+const int myServo_bottomright_shoulder_pin = 7;
+const int myServo_bottomleft_wrist_pin = 6;
+const int myServo_bottomleft_shoulder_pin = 5;
+
+//Angle home positions
+const int home_wrist = 101;
+const int home_shoulder = 95;
+
+void setup() {
+
+  //attaching servo library to each servo pin
+  myServo_topright_wrist.attach(myServo_topright_wrist_pin);
+  myServo_topright_shoulder.attach(myServo_topright_shoulder_pin);
+  myServo_topleft_wrist.attach(myServo_topleft_wrist_pin);
+  myServo_topleft_shoulder.attach(myServo_topleft_shoulder_pin);
+  myServo_bottomright_wrist.attach(myServo_bottomright_wrist_pin);
+  myServo_bottomright_shoulder.attach(myServo_bottomright_shoulder_pin);
+  myServo_bottomleft_wrist.attach(myServo_bottomleft_wrist_pin);
+  myServo_bottomleft_shoulder.attach(myServo_bottomleft_shoulder_pin);
+
+  //dictation receiver input vs output
+  pinMode(receiverPin, INPUT);
+}
+
+void loop() {
+  unsigned long pulseWidth = pulseIn(receiverPin, HIGH);
+
+  if (pulseWidth > 1500) {                // Below angles for H-Shaped Drone --- Not completed --- still need to be tested
+    myServo_topright_wrist.write(101);
+    myServo_topright_shoulder.write(45);
+    myServo_topleft_wrist.write(101);
+    myServo_topleft_shoulder.write(140);
+    myServo_bottomright_wrist.write(101);
+    myServo_bottomright_shoulder.write(140);
+    myServo_bottomleft_wrist.write(101);
+    myServo_bottomleft_shoulder.write(45);
+  } else {                                // Below angles for Home Position --- Quad Drone
+    myServo_topright_wrist.write(home_wrist);
+    myServo_topright_shoulder.write(home_shoulder);
+    myServo_topleft_wrist.write(home_wrist);
+    myServo_topleft_shoulder.write(home_shoulder);
+    myServo_bottomright_wrist.write(home_wrist);
+    myServo_bottomright_shoulder.write(home_shoulder);
+    myServo_bottomleft_wrist.write(home_wrist);
+    myServo_bottomleft_shoulder.write(home_shoulder);
+  }
+}
+
